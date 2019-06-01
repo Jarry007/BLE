@@ -1,0 +1,29 @@
+/* pages/blue/blue.wxss */
+button{
+  margin-top: 20rpx; 
+}
+.muave{
+  background: rgb(126, 67, 204)
+}
+.pink{
+  background: pink
+}
+.green{
+  background: rgb(35, 180, 168)
+}
+.blue{
+  background: cornflowerblue
+}
+.red{
+  background: rgb(219, 67, 47)
+}
+.black{
+  color: #fff;
+  background: black
+}
+.card{
+  box-shadow: 2px 2px 15px #000;
+  height: 20vh;
+  border-radius: 20rpx;
+  margin-top: 30rpx;
+}

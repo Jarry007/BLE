@@ -1,0 +1,14 @@
+
+<button bindtap='startSearch' class='muave'>开始搜索</button>
+<button bindtap='adapter' class='pink'>初始化蓝牙</button>
+<button bindtap='deepSearch' class='red'>深搜索</button>
+<button bindtap='adapter' class='green'>连接蓝牙</button>
+<button bindtap='adapter' class='blue'>传输数据</button>
+<button bindtap='close'class='black' >断开连接</button>
+<block wx:for="{{list}}" wx:key='{{item}}' wx:for-item="item">
+  <view class='card' data-id='{{index}}'><text>{{item.deviceId}}</text>
+  <text>{{item.RSSI}}</text>
+  <text>{{item.localName}}</text>
+  <text>{{item.name}}</text>
+  </view>
+</block>
