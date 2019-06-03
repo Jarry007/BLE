@@ -15,19 +15,19 @@
   "tabBar": {
     "list": [{
       "pagePath": "pages/blue/blue",
-      "text": "蓝牙"
+      "text": "1"
     },
     {
       "pagePath":"pages/wifi/wifi",
-      "text":"wifi"
+      "text":"2"
     },
     {
       "pagePath":"pages/index/index",
-      "text":"首页"
+      "text":"3"
     },
     {
       "pagePath": "pages/logs/logs",
-      "text": "扫描"
+      "text": "4"
     }]
   },
   "sitemapLocation": "sitemap.json"

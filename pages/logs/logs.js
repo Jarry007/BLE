@@ -26,6 +26,12 @@ Page({
     connected: false,
     chs: [],
   },
+  hideModal(e) {
+    this.setData({
+      connected: null
+    })
+  },
+ 
   openBluetoothAdapter() {
     wx.openBluetoothAdapter({ //初始化蓝牙模块
       success: (res) => {
@@ -111,6 +117,7 @@ Page({
     })
     this.stopBluetoothDevicesDiscovery()
   },
+  
   closeBLEConnection() {
     wx.closeBLEConnection({
       deviceId: this.data.deviceId
@@ -127,10 +134,11 @@ Page({
     wx.getBLEDeviceServices({
       deviceId,
       success: (res) => {
+        console.log(res)
         for (let i = 0; i < res.services.length; i++) {
           if (res.services[i].isPrimary) {
+            console.log('services',res.services[i])
             this.getBLEDeviceCharacteristics(deviceId, res.services[i].uuid)
-            return
           }
         }
       }
@@ -144,14 +152,18 @@ Page({
       serviceId, //uuid
       success: (res) => {
         for (let i = 0; i < res.characteristics.length; i++) {
-          
+         
           let item = res.characteristics[i]
+          console.log('all',item)
           // 类型值
           if (item.properties.read) {
             wx.readBLECharacteristicValue({
               deviceId,
               serviceId,
               characteristicId: item.uuid,
+              success(res){
+                console.log('read',res)
+              }
             })
           }
           if (item.properties.write) {
@@ -161,7 +173,7 @@ Page({
             this._deviceId = deviceId
             this._serviceId = serviceId
             this._characteristicId = item.uuid
-            this.writeBLECharacteristicValue()
+          //  this.writeBLECharacteristicValue()
           }
           if (item.properties.notify || item.properties.indicate) {
             wx.notifyBLECharacteristicValueChange({
@@ -180,7 +192,9 @@ Page({
 
     // 操作之前先监听，保证第一时间获取数据
     wx.onBLECharacteristicValueChange((characteristic) => {
-      console.log(`服务-${characteristic.characteristicId}发生了变化,${ab2hex(characteristic.value)}`)
+      console.log(characteristic)
+      console.log(`服务-${characteristic.characteristicId}发生了变化,${characteristic.value}`)
+      console.log(ab2hex(characteristic.value))
       const idx = inArray(this.data.chs, 'uuid', characteristic.characteristicId)
 
       const data = {}
@@ -206,14 +220,38 @@ Page({
   //写入数据
   writeBLECharacteristicValue() {
     // 向蓝牙设备发送一个0x00的16进制数据
-    let buffer = new ArrayBuffer(1)
+    wx.showToast({
+      title: '写入中',
+      icon:'loading',
+      duration:2000
+    })
+    let buffer = new ArrayBuffer(2)
     let dataView = new DataView(buffer)
-    dataView.setUint8(0, Math.random() * 255 | 0)
-    wx.writeBLECharacteristicValue({
-      deviceId: this._deviceId,
-      serviceId: this._serviceId,
-      characteristicId: this._characteristicId,
-      value: buffer,
+    dataView.setUint8(0,2)
+    console.log({
+      "deviceId":this._deviceId,
+      'servicedId':this._serviceId,
+      'chara':this._characteristicId,
+      'value':ab2hex(buffer)
+    })
+    setTimeout(()=>{
+      wx.writeBLECharacteristicValue({
+        deviceId: this._deviceId,
+        serviceId: this._serviceId,
+        characteristicId: this._characteristicId,
+        value: buffer,
+        success(res) {
+          console.log('success', res)
+        },
+        fail(err) {
+          console.log('fail', err)
+        }
+      })
+    },1000)
+    
+  ,
+    wx.showToast({
+      title: '写入完成 ',
     })
   },
 
@@ -223,3 +261,10 @@ Page({
     this._discoveryStarted = false
   },
 })
+
+// let senddata = 'test'
+// let buffer = new ArrayBuffer(senddata.length)
+// let dataView = new DataView(buffer)
+// for (var i = 0; i < senddata.length; i++) {
+//   dataView.setUint8(i, senddata.charAt(i).charCodeAt())
+// }

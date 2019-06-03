@@ -1,2 +1,46 @@
-<!--pages/wifi/wifi.wxml-->
-<text>pages/wifi/wifi.wxml</text>
+<button bindtap='openBLE' class='cu-btn bg-green lg shadow block margin-sm' >初始化蓝牙</button>
+<button bindtap='closeBLE' class='cu-btn bg-red lg shadow block margin-sm' >关闭蓝牙</button>
+
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    一共有{{devices.length}}个设备
+  </view>
+</view>
+
+<scroll-view style='height:50vh;' scroll-y>
+<view class="bg-grey radius margin-sm padding-sm light shadow-blur" 
+ wx:for='{{devices}}' wx:key='index' wx:for-item='item'
+    data-id = '{{item.deviceId}}'
+    data-name = '{{item.name||item.localName}}'
+    bindtap='connectBLE' 
+>
+<view class='text-sm'>设备名称:{{item.name || item.localName}}</view>
+
+<view class='text-xs'>信号强度：{{item.RSSI}}</view>
+
+<view class='text-xs'>UUID：{{item.deviceId}}</view>
+
+<view class='text-xs'>可用服务数：{{item.advertisServiceUUIDs.length || "无"}}</view>
+
+</view>
+</scroll-view>
+<view class="cu-modal {{connected.connected?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">{{connected.name}}</view>  
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+      <view class="content">{{connected.deviceId}}</view>
+      <button wx:if="{{canWrite}}" class='bg-olive cu-btn shadow ' bindtap="writeBle">写数据</button>
+      <button class='bg-black cu-btn shadow ' bindtap='closeConnect'>断开连接</button>
+      <view wx:for="{{chs}}" wx:key="index" class='bg-grey light margin-sm text-xs'>
+   特性UUID:<text class='text-red'>{{item.uuid}}</text>
+    特性值: <text class='text-mauve'>{{item.value}}</text>
+  </view>
+    </view>
+  
+</view>
+
+
