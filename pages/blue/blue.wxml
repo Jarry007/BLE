@@ -12,3 +12,5 @@
   <text>{{item.name}}</text>
   </view>
 </block>
+
+ 
