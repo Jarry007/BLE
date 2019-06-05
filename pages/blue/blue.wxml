@@ -1,16 +1,31 @@
-
-<button bindtap='startSearch' class='muave'>开始搜索</button>
-<button bindtap='adapter' class='pink'>初始化蓝牙</button>
-<button bindtap='deepSearch' class='red'>深搜索</button>
-<button bindtap='adapter' class='green'>连接蓝牙</button>
-<button bindtap='adapter' class='blue'>传输数据</button>
-<button bindtap='close'class='black' >断开连接</button>
-<block wx:for="{{list}}" wx:key='{{item}}' wx:for-item="item">
-  <view class='card' data-id='{{index}}'><text>{{item.deviceId}}</text>
-  <text>{{item.RSSI}}</text>
-  <text>{{item.localName}}</text>
-  <text>{{item.name}}</text>
+<view class='grid col-1 margin-bottom text-center' style='height:100vh;'>
+  <view class='bg-login padding'>
+  
+  <button class='btn-open'>
+  <text class='cuIcon-unlock text-cyan'></text>
+  <text class="center text-cyan">开锁取床</text>
+   </button>
   </view>
-</block>
+  <view class='bg-white padding'>
+    <button class='btn-login' open-type="getUserInfo"
+  bindgetuserinfo="bindGetUserInfo">
 
- 
+    <text class='center text-white'>一键登录</text></button>
+  </view>
+</view>
+<view class="cu-modal {{isIOS?'':'show'}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">提示</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      安卓手机请打开手机定位功能，否则可能会找不到设备
+    </view>
+    <view class="cu-bar bg-cyan">
+      <view class="action margin-0 flex-sub  solid-left" bindtap="hideModal">我知道了</view>
+    </view>
+  </view>
+</view>

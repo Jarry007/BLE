@@ -22,6 +22,19 @@ function tohex(buffer) {
    )
    return hexArr.join('');
 } 
+//16进制数转ASCLL码
+function hexCharCodeToStr(hexCharCodeStr) {
+  var trimedStr = hexCharCodeStr.trim();
+  var rawStr = trimedStr.substr(0, 2).toLowerCase() === "0x" ? trimedStr.substr(2) : trimedStr;
+  var len = rawStr.length;
+  var curCharCode;
+  var resultStr = [];
+  for (var i = 0; i < len; i = i + 2) {
+    curCharCode = parseInt(rawStr.substr(i, 2), 16);
+    resultStr.push(String.fromCharCode(curCharCode));
+  }
+  return resultStr.join("");
+}
 
 function getNowFormatDate() {
   var date = new Date();
@@ -238,6 +251,7 @@ Page({
 
       wx.createBLEConnection({
          deviceId: id,
+         timeout:3500,
          success: res => {
            console.log('连接建立成功',res)
             let info = {
@@ -309,6 +323,32 @@ Page({
              character:res.characteristics,
              serviceID:uuid
            })
+           //监听上面类型的变动
+           wx.onBLECharacteristicValueChange(res => {
+             // 写入成功回调
+             console.log("characteristic", res)
+             //解析蓝牙返回数据
+             let buffer = res.value;
+             let dataView = new DataView(buffer)
+             //       console.log("接收字节长度:" + dataView.byteLength)
+             var str = ""
+             for (var i = 0; i < dataView.byteLength; i++) {
+               // str += String.fromCharCode(dataView.getUint8(i))
+               str += dataView.getUint8(i).toString(16) + ','
+               // console.log(dataView.getUint8(i))
+               // console.log(str)
+             }
+             //       console.log(parseInt(str, 16))
+             str = getNowFormatDate() + "收到数据:" + str;
+             console.log(hexCharCodeToStr(tohex(buffer)))
+             console.log(str)
+
+             this._call = str
+             //  that.setData({
+             //    receivedata: that.data.receivedata + "\n" + str,
+             //  })
+
+           })
             
          },
          fail:err=>{
@@ -347,31 +387,7 @@ Page({
         title: '写入完成 ',
       })
 
-    //监听上面类型的变动
-    wx.onBLECharacteristicValueChange(res => {
-      // 写入成功回调
-      console.log("characteristic", res)
-      //解析蓝牙返回数据
-      let buffer = res.value
-      let dataView = new DataView(buffer)
-      //       console.log("接收字节长度:" + dataView.byteLength)
-      var str = ""
-      for (var i = 0; i < dataView.byteLength; i++) {
-        // str += String.fromCharCode(dataView.getUint8(i))
-        str += dataView.getUint8(i).toString(16) + ','
-        // console.log(dataView.getUint8(i))
-        // console.log(str)
-      }
-      //       console.log(parseInt(str, 16))
-      str = getNowFormatDate() + "收到数据:" + str;
-      console.log(str)
-
-      this._call = str
-      //  that.setData({
-      //    receivedata: that.data.receivedata + "\n" + str,
-      //  })
-
-    })
+   
   },
   chooseSer(e){
     let uuid = e.currentTarget.dataset.uuid;

@@ -1,29 +1,29 @@
 /* pages/blue/blue.wxss */
-button{
-  margin-top: 20rpx; 
+.btn-open{
+  width: 250rpx;
+  height: 250rpx;
+  background: #fff;
+  border-radius:50%;
+  top: 15vh;
+  box-shadow: 1px 2px 18px #fff
 }
-.muave{
-  background: rgb(126, 67, 204)
+
+.bg-login{
+   background: linear-gradient(to bottom, #00A4D9,  rgb(36, 216, 192) );
 }
-.pink{
-  background: pink
+
+.btn-login{
+  width: 250rpx;
+  height: 250rpx;
+  background: linear-gradient(to top right, rgb(40, 172, 224),  rgb(36, 216, 192) );
+  border-radius:50%;
+  top: 15vh;
+  box-shadow: 1px 2px 18px rgb(45, 236, 220)
 }
-.green{
-  background: rgb(35, 180, 168)
+.center{
+  line-height: 250rpx;
+
 }
-.blue{
-  background: cornflowerblue
-}
-.red{
-  background: rgb(219, 67, 47)
-}
-.black{
-  color: #fff;
-  background: black
-}
-.card{
-  box-shadow: 2px 2px 15px #000;
-  height: 20vh;
-  border-radius: 20rpx;
-  margin-top: 30rpx;
+.tip{
+  bottom: 0
 }

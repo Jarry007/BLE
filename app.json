@@ -7,11 +7,14 @@
     
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#39b54a",
+    "navigationBarTitleText": "共享陪护床",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
   },
+    "usingComponents": {
+      "cu-custom": "/colorui/components/cu-custom"
+    },
   "tabBar": {
     "list": [{
       "pagePath": "pages/blue/blue",
