@@ -1,3 +1,5 @@
+//ArrayBuffer 转16进制字符串
+
 function ab2hex(buffer) {
   var hexArr = Array.prototype.map.call(
     new Uint8Array(buffer),
@@ -8,6 +10,19 @@ function ab2hex(buffer) {
   return hexArr.join('');
 }
 
+//inArray (要查找的值，数组，数组中的值)
+// 找不到返回 -1
+function inArray(val, arr, key) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][key] === val) {
+      return i
+    }
+  }
+  return -1;
+}
+
+
 module.exports={
-  ab2hex:ab2hex
+  tohex:ab2hex,
+  inArray : inArray
 }

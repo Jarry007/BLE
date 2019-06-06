@@ -47,7 +47,7 @@ Page({
         if (res.code) {
           wx.getUserInfo({
             success: e => {
-              let info = {
+              let info = {  
                 encryptedData: e.encryptedData,
                 iv: e.iv,
                 code: res.code

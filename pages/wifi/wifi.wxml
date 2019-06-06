@@ -4,6 +4,9 @@
     return item
   }
 </wxs>
+<cu-custom bgColor="bg-gradual-purple">
+  <view slot="content">蓝牙测试</view>
+</cu-custom>
 <button bindtap='openBLE' class='cu-btn bg-green lg shadow block margin-sm'>初始化蓝牙</button>
 <button bindtap='closeBLE' class='cu-btn bg-red lg shadow block margin-sm'>关闭蓝牙</button>
 
@@ -36,12 +39,12 @@
 <scroll-view wx:if="{{character}}" style='height:20vh;' scroll-y>
   <view wx:for="{{character}}" wx:key='character' class='bg-write margin-sm radius' bindtap='choosePro' data-uuid='{{item.uuid}}' data-num='{{index}}'>
     服务id:
-    <view class='text-pink'>{{item.uuid}}</view> 
+    <view class='text-pink'>{{item.uuid}}</view>
     可用服务:
     <text wx:if='{{item.properties.read}}'>读</text>
     <text wx:if='{{item.properties.write}}'>写</text>
     <text wx:if='{{item.properties.notify || item.properties.indicate}}'>通知</text>
-    
+
   </view>
 </scroll-view>
 
@@ -68,9 +71,13 @@
 
 <view class="cu-modal {{properties?'show':''}}">
   <view class="cu-dialog">
-    <view class="content" >
-    {{call}}
-      <button wx:if="{{canWrite}}" class='bg-olive cu-btn shadow margin-sm' bindtap="writeBle">写数据</button>
+    <view class="content">
+      <form bindsubmit='writeBle' wx:if="{{canWrite}}">
+        <input name='write'></input>
+        <button class='bg-olive cu-btn shadow margin-sm' form-type='submit'>写数据</button>
+      </form>
+      <button  class='bg-mauve cu-btn shadow margin-sm' bindtap='readBle'>读数据</button>
+      {{call}}
       <view class="cu-bar justify-end text-white">
         <view class="action" bindtap="closeConnect">
           <text class="cuIcon-close "></text>
@@ -81,4 +88,4 @@
       <view class="action margin-0 flex-sub  solid-left" bindtap="closeConnect">断开连接</view>
     </view>
   </view>
-  </view>
+</view>

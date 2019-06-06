@@ -8,7 +8,6 @@ App({
         let custom = wx.getMenuButtonBoundingClientRect();
         this.globalData.Custom = custom;
         this.globalData.CustomBar = custom.bottom + custom.top - res.statusBarHeight;
-        console.log(res)
         this.globalData.brand = res.brand
       },
     })
