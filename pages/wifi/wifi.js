@@ -338,7 +338,17 @@ Page({
       }
     })
   },
-
+notify(){
+  wx.notifyBLECharacteristicValueChange({
+    state: true, 
+    deviceId: this._deviceId,
+    serviceId: this._serviceId,
+    characteristicId: this._characteristicId,
+    success(res) {
+      console.log('notifyBLECharacteristicValueChange success', res.errMsg)
+    }
+  })
+},
   //数据写入加了0.5秒的延迟
   writeBle(e) {
     let write = e.detail.value.write;
@@ -427,6 +437,10 @@ Page({
 
     }
     if (list.properties.notify || list.properties.indicate) {
+      this.setData({
+        canNotify: true
+      })
+      
       wx.notifyBLECharacteristicValueChange({
         deviceId: deviceId,
         serviceId: serviceId,

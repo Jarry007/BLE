@@ -37,6 +37,12 @@ Page({
   getPhoneNumber(e) {
     console.log(e)
   },
+  tohex(e){
+    
+  },
+  toab(e){
+
+  },
   bindGetUserInfo(e) {
     wx.vibrateShort({})
     const accountInfo = wx.getAccountInfoSync();

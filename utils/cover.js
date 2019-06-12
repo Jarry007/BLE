@@ -21,6 +21,11 @@ function inArray(val, arr, key) {
   return -1;
 }
 
+//16进制转为string
+function hex2ab(hex){
+
+}
+
 
 module.exports={
   tohex:ab2hex,

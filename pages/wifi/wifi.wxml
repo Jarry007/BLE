@@ -4,7 +4,8 @@
     return item
   }
 </wxs>
-<cu-custom bgColor="bg-gradual-purple">
+<cu-custom bgColor="bg-gradual-purple" >
+<view slot="backText">biu~</view>
   <view slot="content">蓝牙测试</view>
 </cu-custom>
 <button bindtap='openBLE' class='cu-btn bg-green lg shadow block margin-sm'>初始化蓝牙</button>
@@ -78,6 +79,7 @@
       </form>
       <button  class='bg-mauve cu-btn shadow margin-sm' bindtap='readBle'>读数据</button>
       {{call}}
+      <button wx:if='{{canNotify}}' class='bg-red cu-btn shadow margin-sm' bindtap='notify'>监听</button>
       <view class="cu-bar justify-end text-white">
         <view class="action" bindtap="closeConnect">
           <text class="cuIcon-close "></text>
