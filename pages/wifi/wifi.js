@@ -45,6 +45,7 @@ Page({
     character: '',
     dialog: false,
     serviceID: '',
+    notifyMsg:[],
     ColorList: [{
         title: '嫣红',
         name: 'red',
@@ -163,8 +164,8 @@ Page({
       devices: [],
       connected: '',
       properties: '',
-      character: ''
-
+      character: '',
+      notifyMsg:[]
     })
   },
   //搜索设备
@@ -244,13 +245,6 @@ Page({
 
         this.stopSearch()
         this.getBLEdevice()
-        wx.onBLEConnectionStateChange(err=>{
-          wx.showModal({
-            title: '错误',
-            content: '蓝牙连接已断开',
-          })
-          console.log('蓝牙连接已断开',err)
-        })
       },
     })
   },
@@ -266,11 +260,11 @@ Page({
       },
     })
     this.setData({
-      properties: ''
+      properties: '',
+      canWrite: false,
+      character:''
     })
-    this.setData({
-      canWrite: false
-    })
+    this.clearNote()
     console.log('无残留?', this.data.connected)
   },
   //获取设备服务
@@ -282,13 +276,6 @@ Page({
           service: res.services,
           dialog: true
         })
-        //console.log('services',res)
-        // for(let i = 0;i<res.services.length; i++){
-        //    if (res.services[i].isPrimary){
-        //       this.getChara(res.services[i].uuid)
-        //    }
-
-        // }
       },
     })
 
@@ -307,35 +294,36 @@ Page({
           character: res.characteristics,
           serviceID: uuid
         })
-        //监听上面类型的变动
-        wx.onBLECharacteristicValueChange(res => {
-          // 写入成功回调
-          console.log("characteristic", res)
-          //解析蓝牙返回数据
-          let buffer = res.value;
-          let dataView = new DataView(buffer)
-          //       console.log("接收字节长度:" + dataView.byteLength)
-          var str = ""
-          for (var i = 0; i < dataView.byteLength; i++) {
-            // str += String.fromCharCode(dataView.getUint8(i))
-            str += dataView.getUint8(i).toString(16) + ','
-            // console.log(dataView.getUint8(i))
-            // console.log(str)
-          }
-          //       console.log(parseInt(str, 16))
-          str = getNowFormatDate() + "收到数据:" + str;
-          console.log(hexCharCodeToStr(cover.tohex(buffer)))
-          console.log(str)
-          this._call = str
-          //  that.setData({
-          //    receivedata: that.data.receivedata + "\n" + str,
-          //  })
-
-        })
       },
       fail: err => {
         console.error('err', err)
       }
+    })
+  },
+  readMsg(){
+    wx.onBLECharacteristicValueChange(res => {
+      let buffer = res.value;
+  
+      let dataView = new DataView(buffer)
+      var str = ""
+      for (var i = 0; i < dataView.byteLength; i++) {
+        str += dataView.getUint8(i).toString(16) 
+      }
+      //str = getNowFormatDate() + "收到数据:" + str;
+      let s = hexCharCodeToStr(str)
+      console.log('10',s)
+      console.log(str)
+      this.setData({
+        notifyMsg: this.data.notifyMsg.concat(str)
+      })
+    })
+    wx.readBLECharacteristicValue({
+      deviceId: this._deviceId,
+      serviceId: this._serviceId,
+      characteristicId: this._characteristicId,
+      success: function(res) {
+        console.log('成功',res)
+      },
     })
   },
 notify(){
@@ -345,7 +333,7 @@ notify(){
     serviceId: this._serviceId,
     characteristicId: this._characteristicId,
     success(res) {
-      console.log('notifyBLECharacteristicValueChange success', res.errMsg)
+      console.log('监听数据如下', res.errMsg)
     }
   })
 },
@@ -356,7 +344,7 @@ notify(){
     let buffer = new ArrayBuffer(1);
     let dataView = new DataView(buffer);
     dataView.setUint8(0, write)
-    setTimeout(() => {
+
         wx.writeBLECharacteristicValue({
           deviceId: this._deviceId,
           serviceId: this._serviceId,
@@ -373,14 +361,10 @@ notify(){
             console.log('写入失败', err)
           }
         })
-      }, 500),
+     
       wx.showToast({
         title: '写入完成 ',
       })
-  },
-  readBle(){
-    
-
   },
   chooseSer(e) {
     let uuid = e.currentTarget.dataset.uuid;
@@ -394,7 +378,11 @@ notify(){
       dialog: false,
     })
   },
-
+  clearNote(){
+    this.setData({
+      notifyMsg:[]
+    })
+  },
   choosePro(e) {
     let uuid = e.currentTarget.dataset.uuid,
       num = e.currentTarget.dataset.num,
@@ -439,18 +427,6 @@ notify(){
     if (list.properties.notify || list.properties.indicate) {
       this.setData({
         canNotify: true
-      })
-      
-      wx.notifyBLECharacteristicValueChange({
-        deviceId: deviceId,
-        serviceId: serviceId,
-        characteristicId: list.uuid,
-        state: true,
-        success: res => {
-          wx.showToast({
-            title: '可以接收消息',
-          })
-        },
       })
     }
 

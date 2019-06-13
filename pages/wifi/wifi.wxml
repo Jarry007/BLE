@@ -39,12 +39,18 @@
 </scroll-view>
 <scroll-view wx:if="{{character}}" style='height:20vh;' scroll-y>
   <view wx:for="{{character}}" wx:key='character' class='bg-write margin-sm radius' bindtap='choosePro' data-uuid='{{item.uuid}}' data-num='{{index}}'>
-    服务id:
+  <view class='cu-capsule radius'>
+  <view class='cu-tag bg-pink'>
+    	<text class="cuIcon-choicenessfill "></text>
+      </view>
+      <view class='cu-tag line-pink'>服务id</view>
+      </view>
     <view class='text-pink'>{{item.uuid}}</view>
+    
     可用服务:
-    <text wx:if='{{item.properties.read}}'>读</text>
-    <text wx:if='{{item.properties.write}}'>写</text>
-    <text wx:if='{{item.properties.notify || item.properties.indicate}}'>通知</text>
+    <text class='cu-tag bg-cyan radius' wx:if='{{item.properties.read}}'>读</text>
+    <text class='cu-tag bg-cyan radius' wx:if='{{item.properties.write}}'>写</text>
+    <text class='cu-tag bg-cyan radius' wx:if='{{item.properties.notify || item.properties.indicate}}'>通知</text>
 
   </view>
 </scroll-view>
@@ -59,8 +65,13 @@
     </view>
     <view class="content text-sm">uuid:{{connected.deviceId}}</view>
     <view wx:for="{{service}}" wx:key='key' wx:for-item='s' class='bg-grey light margin-sm' bindtap='chooseSer' data-uuid='{{s.uuid}}'>
-      服务
-      <view class='text-orange'>{{index}}</view> 服务uuid:
+
+     <view class='cu-capsule radius'>
+  <view class='cu-tag bg-pink'>
+    	<text class="cuIcon-choicenessfill "></text>
+      </view>
+      <view class='cu-tag line-pink'>服务id</view>
+      </view>
       <view class='text-mauve'>{{s.uuid}}</view>
     </view>
     <view>
@@ -77,9 +88,15 @@
         <input name='write'></input>
         <button class='bg-olive cu-btn shadow margin-sm' form-type='submit'>写数据</button>
       </form>
-      <button  class='bg-mauve cu-btn shadow margin-sm' bindtap='readBle'>读数据</button>
-      {{call}}
+      <button  class='bg-mauve cu-btn shadow margin-sm' bindtap='readMsg'>读数据</button>
+
       <button wx:if='{{canNotify}}' class='bg-red cu-btn shadow margin-sm' bindtap='notify'>监听</button>
+      <scroll-view style='height:30vh' scroll-y>
+        <view wx:for='{{notifyMsg}}' wx:key='notifyMsg' wx:for-item="note">
+            {{note}}
+        </view>
+      </scroll-view>
+      <button bindtap='clearNote' class='cu-btn bg-black lg shadow block margin-sm'>清空数据</button>
       <view class="cu-bar justify-end text-white">
         <view class="action" bindtap="closeConnect">
           <text class="cuIcon-close "></text>

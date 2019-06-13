@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/blue/blue",
     "pages/wifi/wifi",
+    "pages/blue/blue",
     "pages/index/index",
     "pages/logs/logs"
     
@@ -15,23 +15,5 @@
     "usingComponents": {
       "cu-custom": "/colorui/components/cu-custom"
     },
-  "tabBar": {
-    "list": [{
-      "pagePath": "pages/blue/blue",
-      "text": "1"
-    },
-    {
-      "pagePath":"pages/wifi/wifi",
-      "text":"2"
-    },
-    {
-      "pagePath":"pages/index/index",
-      "text":"3"
-    },
-    {
-      "pagePath": "pages/logs/logs",
-      "text": "4"
-    }]
-  },
   "sitemapLocation": "sitemap.json"
 }
