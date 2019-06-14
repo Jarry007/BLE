@@ -1,26 +1,3 @@
-//ArrayBuffer 转16进制字符串
-
-function ab2hex(buffer) {
-  var hexArr = Array.prototype.map.call(
-    new Uint8Array(buffer),
-    function (bit) {
-      return ('00' + bit.toString(16)).slice(-2)
-    }
-  )
-  return hexArr.join('');
-}
-
-//inArray (要查找的值，数组，数组中的值)
-// 找不到返回 -1
-function inArray(val, arr, key) {
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i][key] === val) {
-      return i
-    }
-  }
-  return -1;
-}
-
 function FillString(t, c, n, b) {
   if ((t == "") || (c.length != 1) || (n <= t.length)) {
     return t;
@@ -56,9 +33,9 @@ function HexToSingle(t) {
   var e = t.substring(1, 9);
   var m = t.substring(9);
   e = parseInt(e, 2) - 127;
-  console.log("e", e)
+  console.log("e",e)
   m = "1" + m;
-  console.log('m2', m)
+  console.log('m2',m)
   if (e >= 0) {
     m = m.substr(0, e + 1) + "." + m.substring(e + 1)
   } else {
@@ -189,9 +166,83 @@ CRC.toString = function (arr, isReverse) {
   return CRC.padLeft((isReverse ? hi + lo * 0x100 : hi * 0x100 + lo).toString(16).toUpperCase(), 4, '0');
 };
 
-module.exports={
-  tohex:ab2hex,
-  inArray : inArray,
-  CRC:CRC,
-  HexToSingle: HexToSingle
-}
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    coverd: '',
+    crc:''
+
+  },
+  cover(e) {
+    
+    let data_ = e.detail.value
+    let crc =  CRC.ToModbusCRC16(data_)
+    let head = crc.substring(0,2)
+    let foot = crc.substring(2)
+    console.log(foot+head)
+    let data_float = HexToSingle(data_)
+    this.setData({
+      coverd: data_float,
+      crc:foot+head
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function() {
+
+  }
+})

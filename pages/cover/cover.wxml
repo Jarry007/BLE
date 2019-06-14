@@ -1,0 +1,10 @@
+<!--pages/cover/cover.wxml-->
+<cu-custom bgColor="bg-gradual-purple" >
+
+  <view slot="content">进制转化及校验</view>
+</cu-custom>
+<view class='contair'>
+<input bindinput='cover'  placeholder="输入hex"></input>
+<view>浮点数： {{coverd}}</view>
+<view> crc-16 Modbus : {{crc}}</view>
+</view>

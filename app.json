@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/wifi/wifi",
+    "pages/cover/cover",
     "pages/blue/blue",
-    "pages/index/index",
+    "pages/bar/index",
     "pages/logs/logs"
     
   ],
@@ -11,6 +12,20 @@
     "navigationBarTitleText": "共享陪护床",
     "navigationStyle": "custom",
     "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/wifi/wifi",
+      "text": "蓝牙调试"
+    },
+    {
+      "pagePath": "pages/cover/cover",
+      "text": "转化校验"
+    },
+    {
+      "pagePath": "pages/bar/index",
+      "text": "图表"
+    }]
   },
     "usingComponents": {
       "cu-custom": "/colorui/components/cu-custom"

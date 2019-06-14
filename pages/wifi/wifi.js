@@ -2,16 +2,17 @@ const app = getApp()
 var cover = require('../../utils/cover.js')
 
 
-//16进制数转ASCLL码
+//16进制数转string
 function hexCharCodeToStr(hexCharCodeStr) {
-  var trimedStr = hexCharCodeStr.trim();
-  var rawStr = trimedStr.substr(0, 2).toLowerCase() === "0x" ? trimedStr.substr(2) : trimedStr;
-  var len = rawStr.length;
+  var trimedStr = hexCharCodeStr.trim(); //去除两端的空白
+  var rawStr = trimedStr.substr(0, 2).toLowerCase() === "0x" ? trimedStr.substr(2) : trimedStr; //去除数据中的0x
+  var len = rawStr.length; //剩余字节的长度
   var curCharCode;
-  var resultStr = [];
+  var resultStr = []; //转化结果
   for (var i = 0; i < len; i = i + 2) {
     curCharCode = parseInt(rawStr.substr(i, 2), 16);
-    resultStr.push(String.fromCharCode(curCharCode));
+    console.log('16', curCharCode) //将没两个字节转化为16进制
+    resultStr.push(String.fromCharCode(curCharCode.toString(10)));
   }
   return resultStr.join("");
 }
@@ -45,7 +46,7 @@ Page({
     character: '',
     dialog: false,
     serviceID: '',
-    notifyMsg:[],
+    notifyMsg: [],
     ColorList: [{
         title: '嫣红',
         name: 'red',
@@ -129,16 +130,16 @@ Page({
         this.searchBLE()
       },
       fail: err => {
-        if (err.errCode === 10000){
+        if (err.errCode === 10000) {
           wx.showToast({
             title: '蓝牙未打开',
-            duration:2000
+            duration: 2000
           })
         }
         if (err.errCode === 10001) {
           wx.onBluetoothAdapterStateChange(res => {
             if (res.available) {
-                this.searchBLE()
+              this.searchBLE()
             }
           })
         } else {
@@ -165,7 +166,7 @@ Page({
       connected: '',
       properties: '',
       character: '',
-      notifyMsg:[]
+      notifyMsg: []
     })
   },
   //搜索设备
@@ -262,7 +263,7 @@ Page({
     this.setData({
       properties: '',
       canWrite: false,
-      character:''
+      character: ''
     })
     this.clearNote()
     console.log('无残留?', this.data.connected)
@@ -300,43 +301,72 @@ Page({
       }
     })
   },
-  readMsg(){
-    wx.onBLECharacteristicValueChange(res => {
-      let buffer = res.value;
-  
-      let dataView = new DataView(buffer)
-      var str = ""
-      for (var i = 0; i < dataView.byteLength; i++) {
-        str += dataView.getUint8(i).toString(16) 
-      }
-      //str = getNowFormatDate() + "收到数据:" + str;
-      let s = hexCharCodeToStr(str)
-      console.log('10',s)
-      console.log(str)
-      this.setData({
-        notifyMsg: this.data.notifyMsg.concat(str)
-      })
-    })
+  readMsg() {
+
     wx.readBLECharacteristicValue({
       deviceId: this._deviceId,
       serviceId: this._serviceId,
       characteristicId: this._characteristicId,
       success: function(res) {
-        console.log('成功',res)
+        console.log('成功', res)
       },
     })
   },
-notify(){
-  wx.notifyBLECharacteristicValueChange({
-    state: true, 
-    deviceId: this._deviceId,
-    serviceId: this._serviceId,
-    characteristicId: this._characteristicId,
-    success(res) {
-      console.log('监听数据如下', res.errMsg)
-    }
-  })
-},
+  notify() {
+    wx.notifyBLECharacteristicValueChange({
+      state: true,
+      deviceId: this._deviceId,
+      serviceId: this._serviceId,
+      characteristicId: this._characteristicId,
+      success(res) {
+        console.log('监听数据如下', res.errMsg)
+      }
+    })
+    wx.onBLECharacteristicValueChange(res => {
+      let str = cover.tohex(res.value) //将ArrayBuffer 转化成 hex 16进制
+      console.log(str)
+      let crc = cover.CRC.ToModbusCRC16(str.substring(0, 14)) //取前14位进行 crc 转化
+      let head = crc.substring(0, 2), //取出地位信息
+        getCrc = str.slice(-2).toLocaleUpperCase(), //取出数据中的crc低位信息
+        fnc = str.substring(0, 2), //function code，状态码
+        codeType = str.substring(2, 6), //数据类型
+        hex = str.substring(6, 14); //hex 数据
+      if (fnc === '06' && head === getCrc) {
+        switch (codeType) {
+          case '0001': //温度
+            let temperature = cover.HexToSingle(hex) //转化为float类型
+            console.log('温度', temperature);
+            break;
+          case '0002': //湿度
+            let humidity = cover.HexToSingle(hex)
+            console.log('湿度',Math.round(humidity*100)/100);
+            break;
+          case '0003': //温度上限
+            let temUpper = cover.HexToSingle(hex)
+            console.log('温度上限', temUpper)
+            break;
+          case '0004': //温度下限
+            let temLower = cover.HexToSingle(hex)
+            console.log('温度下限', temLower);
+            break;
+          case '0005': //湿度上限
+            let humUpper = cover.HexToSingle(hex)
+            console.log('湿度上限', humUpper)
+            break;
+          case '0006': //湿度下限
+            let humLower = cover.HexToSingle(hex)
+            console.log('湿度下限', humLower)
+            break;
+          default:
+            console.log('无法找到')
+        }
+      }
+
+      this.setData({
+        notifyMsg: this.data.notifyMsg.concat(str)
+      })
+    })
+  },
   //数据写入加了0.5秒的延迟
   writeBle(e) {
     let write = e.detail.value.write;
@@ -345,26 +375,26 @@ notify(){
     let dataView = new DataView(buffer);
     dataView.setUint8(0, write)
 
-        wx.writeBLECharacteristicValue({
-          deviceId: this._deviceId,
-          serviceId: this._serviceId,
-          characteristicId: this._characteristicId,
-          value: buffer,
-          success: res => {
-            console.log('写入成功', res)
-            this.setData({
-              call: getNowFormatDate() + "写入" + cover.tohex(buffer)
-            })
-            console.log(getNowFormatDate() + "写入" +buffer)
-          },
-          fail: err => {
-            console.log('写入失败', err)
-          }
+    wx.writeBLECharacteristicValue({
+      deviceId: this._deviceId,
+      serviceId: this._serviceId,
+      characteristicId: this._characteristicId,
+      value: buffer,
+      success: res => {
+        console.log('写入成功', res)
+        this.setData({
+          call: getNowFormatDate() + "写入" + cover.tohex(buffer)
         })
-     
-      wx.showToast({
-        title: '写入完成 ',
-      })
+        console.log(getNowFormatDate() + "写入" + buffer)
+      },
+      fail: err => {
+        console.log('写入失败', err)
+      }
+    })
+
+    wx.showToast({
+      title: '写入完成 ',
+    })
   },
   chooseSer(e) {
     let uuid = e.currentTarget.dataset.uuid;
@@ -378,9 +408,9 @@ notify(){
       dialog: false,
     })
   },
-  clearNote(){
+  clearNote() {
     this.setData({
-      notifyMsg:[]
+      notifyMsg: []
     })
   },
   choosePro(e) {

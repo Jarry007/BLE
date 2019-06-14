@@ -1,0 +1,14 @@
+/* pages/cover/cover.wxss */
+.contair{
+  border-radius: 10rpx;
+  width: 600rpx;
+  height: 600rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  box-shadow: 9rpx 12rpx 12rpx rgb(192, 192, 207);
+  padding: 20rpx 15rpx;
+  font-size: 35rpx;
+  background: #fff;
+}
