@@ -1,3 +1,8 @@
+<cu-custom bgColor="bg-gradual-purple" >
+
+  <view slot="content">数据展示</view>
+</cu-custom>
 <view class="container">
-  <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+  <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
 </view>
+

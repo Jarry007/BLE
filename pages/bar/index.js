@@ -1,179 +1,113 @@
-// pages/bar/index.js
 import * as echarts from '../../ec-canvas/echarts';
+
+const app = getApp();
 
 function initChart(canvas, width, height) {
   const chart = echarts.init(canvas, null, {
-    width: 300,
-    height: 300
+    width: width,
+    height: height
   });
   canvas.setChart(chart);
-
   var option = {
-    color: ['#37a2da', '#32c5e9', '#67e0e3'],
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-      },
-      confine: true
+    title: {
+      text: '温度、湿度变化表',
+      left: 'center',
+      subtext: 'BLE4.0蓝牙'
     },
+    color: ["#FF6666", "#3366FF", "#FF9933"],
     legend: {
-      data: ['热度', '正面', '负面']
+      data: ['温度', '湿度', '浓度'],
+      top: 20,
+      left: 'center',
+      z: 100
     },
     grid: {
-      left: 20,
-      right: 20,
-      bottom: 15,
-      top: 40,
       containLabel: true
     },
-    xAxis: [
-      {
-        type: 'value',
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        axisLabel: {
-          color: '#666'
-        }
-      }
-    ],
-    yAxis: [
-      {
-        type: 'category',
-        axisTick: { show: false },
-        data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        axisLabel: {
-          color: '#666'
-        }
-      }
-    ],
-    series: [
-      {
-        name: '热度',
-        type: 'bar',
-        label: {
-          normal: {
-            show: true,
-            position: 'inside'
-          }
-        },
-        data: [300, 270, 340, 344, 300, 320, 310],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#37a2da'
-          // }
-        }
+    tooltip: {
+      show: true,
+      trigger: 'axis'
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      // show: false
+    },
+    yAxis: {
+      x: 'center',
+      type: 'value',
+      axisLable: {
+        formatter: "{value} ℃"
       },
-      {
-        name: '正面',
-        type: 'bar',
-        stack: '总量',
-        label: {
-          normal: {
-            show: true
-          }
-        },
-        data: [120, 102, 141, 174, 190, 250, 220],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#32c5e9'
-          // }
-        }
-      },
-      {
-        name: '负面',
-        type: 'bar',
-        stack: '总量',
-        label: {
-          normal: {
-            show: true,
-            position: 'left'
-          }
-        },
-        data: [-20, -32, -21, -34, -90, -130, -110],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#67e0e3'
-          // }
+      splitLine: {
+        lineStyle: {
+          type: 'dashed'
         }
       }
-    ]
+      // show: false
+    },
+    series: [{
+      name: '温度',
+      type: 'line',
+      smooth: true,
+      data: [18.1, 18.6, 19.3, 18.4, 16.9, 17.0, 18.2],
+      markLine: {
+        symbol: "none",               //去掉警戒线最后面的箭头
+        label: {
+          position: "end"          //将警示值放在哪个位置，三个值“start”,"middle","end"  开始  中点 结束
+        },
+        data: [{
+          silent: false,             //鼠标悬停事件  true没有，false有
+          lineStyle: {               //警戒线的样式  ，虚实  颜色
+            type: "dotta",
+            color: "#FA3934",
+          },
+          yAxis: 11.75           // 警戒线的标注值，可以有多个yAxis,多条警示线   或者采用   {type : 'average', name: '平均值'}，type值有  max  min  average，分为最大，最小，平均值
+        }]
+      }
+    }, {
+      name: '湿度',
+      type: 'line',
+      smooth: true,
+      data: [15.1, 13.2, 17.3, 20.4, 16.9, 15.0, 14.3]
+    },
+    {
+      name: '浓度',
+      type: 'line',
+      smooth: true,
+      data: [16.1, 13.6, 11.3, 18.4, 18.9, 17.0, 18.2]
+    },]
   };
+  
+
   chart.setOption(option);
   return chart;
 }
-Page({
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    ec: {
-      onInit: initChart
+Page({
+  onShareAppMessage: function (res) {
+    return {
+      title: 'ECharts 可以在微信小程序中使用啦！',
+      path: '/pages/index/index',
+      success: function () { },
+      fail: function () { }
     }
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  data: {
+    ec: {
+      lazyload: true,
+      onInit: initChart(option)
+    }
+  },
+  onLoad:function(){
+   
 
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onReady(){
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  changeValue(){
+    
   }
-})
+});

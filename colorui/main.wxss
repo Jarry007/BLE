@@ -3531,6 +3531,20 @@ scroll-view.cu-steps .cu-item {
 	color: var(--green);
 	background-color: var(--greenLight);
 }
+.bg-lt-red{
+  color: #fff;
+  background-color: #FF6666
+}
+
+.bg-lt-blue{
+  color: #fff;
+  background-color: #3366FF
+}
+.bg-lt-orange{
+  color: #fff;
+  background-color: #FF9933
+}
+
 
 .bg-cyan.light {
 	color: var(--cyan);

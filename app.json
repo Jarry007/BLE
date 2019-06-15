@@ -14,6 +14,7 @@
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
+    "selectedColor": "#9c26b0",
     "list": [{
       "pagePath": "pages/wifi/wifi",
       "text": "蓝牙调试"
