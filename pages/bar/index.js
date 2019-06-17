@@ -97,12 +97,8 @@ Page({
   data: {
     ec: {
       lazyload: true,
-      onInit: initChart(option)
+      onInit: initChart
     }
-  },
-  onLoad:function(){
-   
-
   },
   onReady(){
   },
