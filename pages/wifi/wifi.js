@@ -47,6 +47,8 @@ Page({
     dialog: false,
     serviceID: '',
     notifyMsg: [],
+    temperature:[],
+    humidity:[],
     ColorList: [{
         title: '嫣红',
         name: 'red',

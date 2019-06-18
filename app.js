@@ -18,4 +18,4 @@ App({
     userInfo: null,
     url :''
   }
-})
+})                                                            
