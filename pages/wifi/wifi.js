@@ -1,22 +1,7 @@
+import * as echarts from '../../ec-canvas/echarts';
 const app = getApp()
 var cover = require('../../utils/cover.js')
-
-
-//16进制数转string
-function hexCharCodeToStr(hexCharCodeStr) {
-  var trimedStr = hexCharCodeStr.trim(); //去除两端的空白
-  var rawStr = trimedStr.substr(0, 2).toLowerCase() === "0x" ? trimedStr.substr(2) : trimedStr; //去除数据中的0x
-  var len = rawStr.length; //剩余字节的长度
-  var curCharCode;
-  var resultStr = []; //转化结果
-  for (var i = 0; i < len; i = i + 2) {
-    curCharCode = parseInt(rawStr.substr(i, 2), 16);
-    console.log('16', curCharCode) //将没两个字节转化为16进制
-    resultStr.push(String.fromCharCode(curCharCode.toString(10)));
-  }
-  return resultStr.join("");
-}
-
+var chart = null
 function getNowFormatDate() {
   var date = new Date();
   var seperator1 = "-";
@@ -37,6 +22,9 @@ function getNowFormatDate() {
 
 Page({
   data: {
+    ec: {
+      lazyLoad: true
+    },
     call: '',
     device: '',
     devices: [],
@@ -47,79 +35,93 @@ Page({
     dialog: false,
     serviceID: '',
     notifyMsg: [],
-    temperature:[],
-    humidity:[],
-    ColorList: [{
-        title: '嫣红',
-        name: 'red',
-        color: '#e54d42'
+    temperature:'',
+    humidity:'',
+    timestamp: ['17:12', '17:12', '17:12', '17:12', '17:12', '17:12', '17:12'],
+    tl:[-25,-24,25,27,27,27,27],
+    hl:[39,44,45,47,41,38,36] ,
+    ColorList: app.globalData.ColorList
+  },
+  onReady:function(){
+    this.lineCharts = this.selectComponent('#chart-line');
+    console.log(this.lineCharts)
+    this.judge()
+  },
+  judge() {
+    if (!chart) {
+      this.initLine()
+    } else {
+      this.setOption(chart)
+    }
+  },
+  initLine() {
+    this.lineCharts.init((canvas, width, height) => {
+      chart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+      });
+      this.setOption(chart);
+      return chart
+    })
+  },
+  setOption: function (chart) {
+    console.log(chart)
+    //chart.clear();  // 清除
+    chart.setOption(this.getData());  //获取新数据
+  },
+  getData() {
+    let option = {
+      title: {
+        text: '温度、湿度变化表',
+        left: 'center',
       },
-      {
-        title: '桔橙',
-        name: 'orange',
-        color: '#f37b1d'
+      color: ["#FF6666", "#3366FF"],
+      legend: {
+        data: ['温度', '湿度'],
+        top: 20,
+        left: 'center',
+        z: 100
       },
-      {
-        title: '明黄',
-        name: 'yellow',
-        color: '#fbbd08'
+      grid: {
+        containLabel: true
       },
-      {
-        title: '橄榄',
-        name: 'olive',
-        color: '#8dc63f'
+      tooltip: {
+        show: true,
+        trigger: 'axis'
       },
-      {
-        title: '森绿',
-        name: 'green',
-        color: '#39b54a'
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        nameRotate:30,
+        data:this.data.timestamp,
+        // show: false
       },
-      {
-        title: '天青',
-        name: 'cyan',
-        color: '#1cbbb4'
+      yAxis: {
+        x: 'center',
+        type: 'value',
+        axisLable: {
+          formatter: "{value} ℃"
+        },
+        splitLine: {
+          lineStyle: {
+            type: 'dashed'
+          }
+        }
+        // show: false
       },
-      {
-        title: '海蓝',
-        name: 'blue',
-        color: '#0081ff'
-      },
-      {
-        title: '姹紫',
-        name: 'purple',
-        color: '#6739b6'
-      },
-      {
-        title: '木槿',
-        name: 'mauve',
-        color: '#9c26b0'
-      },
-      {
-        title: '桃粉',
-        name: 'pink',
-        color: '#e03997'
-      },
-      {
-        title: '棕褐',
-        name: 'brown',
-        color: '#a5673f'
-      },
-      {
-        title: '玄灰',
-        name: 'grey',
-        color: '#8799a3'
-      },
-      {
-        title: '草灰',
-        name: 'gray',
-        color: '#aaaaaa'
-      },
-      {
-        title: '墨黑',
-        name: 'black',
-        color: '#333333'
-      },
-    ]
+      series: [{
+        name: '温度',
+        type: 'line',
+        smooth: true,
+        data: this.data.tl,
+      }, {
+        name: '湿度',
+        type: 'line',
+        smooth: true,
+        data: this.data.hl
+      },]
+    }
+    return option
   },
   //初始化蓝牙
   openBLE() {
@@ -337,11 +339,31 @@ Page({
         switch (codeType) {
           case '0001': //温度
             let temperature = cover.HexToSingle(hex) //转化为float类型
-            console.log('温度', temperature);
+            let tl = [{
+              time:getNowFormatDate(),
+              temperature : temperature
+            }]
+            this.setData({
+              tl: this.data.tl.concat(temperature),
+              temperature:temperature,
+              timestamp: this.data.timestamp.concat(getNowFormatDate())
+            })
+            console.log(this.data.tl)
+            this.judge()
+            console.log('ok')
             break;
           case '0002': //湿度
             let humidity = cover.HexToSingle(hex)
-            console.log('湿度',Math.round(humidity*100)/100);
+            let hl = [{
+              time:getNowFormatDate(),
+              humidity: Math.round(humidity * 1000) / 1000
+            }]
+            this.setData({
+              hl: this.data.hl.concat([Math.round(humidity * 1000) / 1000]),
+              humidity:humidity,
+              timestamp: this.data.timestamp.concat(getNowFormatDate())
+            })
+            this.judge();
             break;
           case '0003': //温度上限
             let temUpper = cover.HexToSingle(hex)

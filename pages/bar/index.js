@@ -7,18 +7,7 @@ function addNum(){
   data_ = data_.concat([num])
   return data_ 
 }
-function initChart(canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
-
- 
-
-  chart.setOption(option);
-  return chart;
-}
+var chart = null;
 
 Page({
   onShareAppMessage: function (res) {
@@ -32,32 +21,41 @@ Page({
   data: {
     ec: {
       lazyLoad: true
-      }
+      },
+    temperature: [17.3, 20.4, 16.9, 15.0, 14.3, 13.2, 17.3, 20.4, 16.9,]
     
   },
   onLoad:function(){
     this.lineCharts = this.selectComponent('#mychart-line');
-    console.log(this.lineCharts)
-    setTimeout(this.initLine(),1000)
+    this.judge()
     
+  },
+  judge(){
+    if(!chart){
+      this.initLine()
+    }else{
+      this.getData()
+    }
   },
   initLine(){
     this.lineCharts.init((canvas, width, height)=>{
-      const chart = echarts.init(canvas, null, {
+       chart = echarts.init(canvas, null, {
         width: width,
         height: height
       });
-      canvas.setChart(this.getData());
+      this.setOption(chart);
       return chart
     })
   },
+  setOption: function (chart) {
+    chart.clear();  // 清除
+    chart.setOption(this.getData());  //获取新数据
+  },
   getData(){
-    console.log('ha')
     let option = {
       title: {
         text: '温度、湿度变化表',
         left: 'center',
-        subtext: 'BLE4.0蓝牙'
       },
       color: ["#FF6666", "#3366FF", "#FF9933"],
       legend: {
@@ -96,15 +94,7 @@ Page({
         name: '温度',
         type: 'line',
         smooth: true,
-        data: setTimeout(() => {
-          for (let i = 0; i < 10; i++) {
-            setTimeout(() => {
-              addNum()
-              console.log(addNum())
-            }, 1000)
-          }
-          return addNum()
-        }, 100),
+        data: this.data.temperature,
         markLine: {
           symbol: "none",               //去掉警戒线最后面的箭头
           label: {

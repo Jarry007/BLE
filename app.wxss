@@ -12,5 +12,11 @@
   justify-content: space-between;
   box-sizing: border-box;
 } 
+swiper{
+
+  width: 100vw;
+  height: 50vh;
+
+}
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";

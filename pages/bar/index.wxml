@@ -2,7 +2,11 @@
 
   <view slot="content">数据展示</view>
 </cu-custom>
+
 <view class="container">
-  <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+
+  <ec-canvas id="mychart-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
 </view>
+
+<button bindtap='getData'> sss</button>
 

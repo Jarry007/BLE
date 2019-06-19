@@ -11,12 +11,16 @@
 <button bindtap='openBLE' class='cu-btn bg-lt-blue lg shadow block margin-sm'>初始化蓝牙</button>
 <button bindtap='closeBLE' class='cu-btn bg-lt-red lg shadow block margin-sm'>关闭蓝牙</button>
 
+         
+       
 <view class="cu-bar bg-white solid-bottom margin-top">
   <view class="action">
     一共有{{devices.length}}个设备
   </view>
 </view>
 
+  <swiper>
+  <swiper-item>
 <scroll-view style='height:50vh;' scroll-y>
   <view class="cu-list menu-avatar radius padding-sm shadow-blur" wx:for='{{devices}}' wx:key='index' wx:for-item='item' data-id='{{item.deviceId}}' data-name='{{item.name||item.localName}}' bindtap='connectBLE'>
     <view class="cu-item">
@@ -37,6 +41,11 @@
     </view>
   </view>
 </scroll-view>
+</swiper-item>
+<swiper-item>
+ <ec-canvas id="chart-line" canvas-id="chart-line" ec="{{ ec }}"></ec-canvas>
+</swiper-item>
+</swiper>
 <scroll-view wx:if="{{character}}" style='height:20vh;' scroll-y>
   <view wx:for="{{character}}" wx:key='character' class='bg-write margin-sm radius' bindtap='choosePro' data-uuid='{{item.uuid}}' data-num='{{index}}'>
   <view class='cu-capsule radius'>
@@ -92,11 +101,15 @@
 
       <button wx:if='{{canNotify}}' class='bg-red cu-btn shadow margin-sm' bindtap='notify'>监听</button>
       <scroll-view style='height:30vh' scroll-y>
-        <view wx:for='{{notifyMsg}}' wx:key='notifyMsg' wx:for-item="note">
+        <!-- <view wx:for='{{notifyMsg}}' wx:key='notifyMsg' wx:for-item="note">
             {{note}}
-        </view>
+        </view> -->
+
+        <view>温度:{{temperature}}℃</view>
+        <view>湿度:{{humidity}} %</view>
+       
       </scroll-view>
-      <button bindtap='clearNote' class='cu-btn bg-black lg shadow block margin-sm'>清空数据</button>
+      <!-- <button bindtap='clearNote' class='cu-btn bg-black lg shadow block margin-sm'>清空数据</button> -->
       <view class="cu-bar justify-end text-white">
         <view class="action" bindtap="closeConnect">
           <text class="cuIcon-close "></text>
