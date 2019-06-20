@@ -5,7 +5,7 @@
   }
 </wxs>
 <cu-custom bgColor="bg-gradual-purple" >
-<view slot="backText">biu~</view>
+
   <view slot="content">蓝牙测试</view>
 </cu-custom>
 <button bindtap='openBLE' class='cu-btn bg-lt-blue lg shadow block margin-sm'>初始化蓝牙</button>

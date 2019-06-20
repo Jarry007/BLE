@@ -3,8 +3,7 @@
     "pages/wifi/wifi",
     "pages/cover/cover",
     "pages/blue/blue",
-    "pages/bar/index",
-    "pages/logs/logs"
+    "pages/bar/index"
     
   ],
   "window": {

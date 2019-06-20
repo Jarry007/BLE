@@ -14,9 +14,7 @@ function getNowFormatDate() {
   if (strDate >= 0 && strDate <= 9) {
     strDate = "0" + strDate;
   }
-  var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
-    " " + date.getHours() + seperator2 + date.getMinutes() +
-    seperator2 + date.getSeconds();
+  var currentdate = date.getHours() + seperator2 + date.getMinutes()
   return currentdate;
 }
 
@@ -65,7 +63,7 @@ Page({
     })
   },
   setOption: function (chart) {
-    console.log(chart)
+    //console.log(chart)
     //chart.clear();  // 清除
     chart.setOption(this.getData());  //获取新数据
   },
@@ -100,7 +98,7 @@ Page({
         x: 'center',
         type: 'value',
         axisLable: {
-          formatter: "{value} ℃"
+          formatter: '${value} ℃'
         },
         splitLine: {
           lineStyle: {
@@ -119,7 +117,16 @@ Page({
         type: 'line',
         smooth: true,
         data: this.data.hl
-      },]
+      },],
+      dataZoom: [{//这个是设置滚动条的,可以拉动这个滚动条来改变你的图形的显示比例
+        type: 'slider',
+        show: true, //flase直接隐藏图形
+        xAxisIndex: [0],
+        left: '9%', //滚动条靠左侧的百分比
+        bottom: -5,
+        start: 0,//滚动条的起始位置
+        end: 50 //滚动条的截止位置（按比例分割你的柱状图x轴长度）
+      }]
     }
     return option
   },
@@ -324,72 +331,79 @@ Page({
       characteristicId: this._characteristicId,
       success(res) {
         console.log('监听数据如下', res.errMsg)
+        this.setData({
+          dialog:false
+        })
       }
     })
-    wx.onBLECharacteristicValueChange(res => {
-      let str = cover.tohex(res.value) //将ArrayBuffer 转化成 hex 16进制
-      console.log(str)
-      let crc = cover.CRC.ToModbusCRC16(str.substring(0, 14)) //取前14位进行 crc 转化
-      let head = crc.substring(0, 2), //取出地位信息
-        getCrc = str.slice(-2).toLocaleUpperCase(), //取出数据中的crc低位信息
-        fnc = str.substring(0, 2), //function code，状态码
-        codeType = str.substring(2, 6), //数据类型
-        hex = str.substring(6, 14); //hex 数据
-      if (fnc === '06' && head === getCrc) {
-        switch (codeType) {
-          case '0001': //温度
-            let temperature = cover.HexToSingle(hex) //转化为float类型
-            let tl = [{
-              time:getNowFormatDate(),
-              temperature : temperature
-            }]
-            this.setData({
-              tl: this.data.tl.concat(temperature),
-              temperature:temperature,
-              timestamp: this.data.timestamp.concat(getNowFormatDate())
-            })
-            console.log(this.data.tl)
-            this.judge()
-            console.log('ok')
-            break;
-          case '0002': //湿度
-            let humidity = cover.HexToSingle(hex)
-            let hl = [{
-              time:getNowFormatDate(),
-              humidity: Math.round(humidity * 1000) / 1000
-            }]
-            this.setData({
-              hl: this.data.hl.concat([Math.round(humidity * 1000) / 1000]),
-              humidity:humidity,
-              timestamp: this.data.timestamp.concat(getNowFormatDate())
-            })
-            this.judge();
-            break;
-          case '0003': //温度上限
-            let temUpper = cover.HexToSingle(hex)
-            console.log('温度上限', temUpper)
-            break;
-          case '0004': //温度下限
-            let temLower = cover.HexToSingle(hex)
-            console.log('温度下限', temLower);
-            break;
-          case '0005': //湿度上限
-            let humUpper = cover.HexToSingle(hex)
-            console.log('湿度上限', humUpper)
-            break;
-          case '0006': //湿度下限
-            let humLower = cover.HexToSingle(hex)
-            console.log('湿度下限', humLower)
-            break;
-          default:
-            console.log('无法找到')
-        }
-      }
-
-      this.setData({
-        notifyMsg: this.data.notifyMsg.concat(str)
+    
+      wx.onBLECharacteristicValueChange(res => {
+        let str = cover.tohex(res.value) //将ArrayBuffer 转化成 hex 16进制
+        // console.log(str)
+        let crc = cover.CRC.ToModbusCRC16(str.substring(0, 14)) //取前14位进行 crc 转化
+        let head = crc.substring(0, 2), //取出地位信息
+          getCrc = str.slice(-2).toLocaleUpperCase(), //取出数据中的crc低位信息
+          fnc = str.substring(0, 2), //function code，状态码
+          codeType = str.substring(2, 6), //数据类型
+          hex = str.substring(6, 14); //hex 数据
+        setTimeout(() => {
+          if (fnc === '06' && head === getCrc) {
+            var timestamp = this.data.timestamp.concat(getNowFormatDate())
+            switch (codeType) {
+              case '0001': //温度
+                let temperature = cover.HexToSingle(hex) //转化为float类型
+                let tl = [{
+                  time: getNowFormatDate(),
+                  temperature: temperature
+                }]
+                this.setData({
+                  tl: this.data.tl.concat(temperature),
+                  temperature: temperature,
+                  timestamp: timestamp
+                })
+                console.log(this.data.tl)
+                this.judge()
+                console.log('ok')
+                break;
+              case '0002': //湿度
+                let humidity = cover.HexToSingle(hex)
+                let hl = [{
+                  time: getNowFormatDate(),
+                  humidity: Math.round(humidity * 1000) / 1000
+                }]
+                this.setData({
+                  hl: this.data.hl.concat([Math.round(humidity * 1000) / 1000]),
+                  humidity: humidity,
+                  timestamp: timestamp
+                })
+                this.judge();
+                break;
+              case '0003': //温度上限
+                let temUpper = cover.HexToSingle(hex)
+                console.log('温度上限', temUpper)
+                break;
+              case '0004': //温度下限
+                let temLower = cover.HexToSingle(hex)
+                console.log('温度下限', temLower);
+                break;
+              case '0005': //湿度上限
+                let humUpper = cover.HexToSingle(hex)
+                console.log('湿度上限', humUpper)
+                break;
+              case '0006': //湿度下限
+                let humLower = cover.HexToSingle(hex)
+                console.log('湿度下限', humLower)
+                break;
+              default:
+                console.log('无法找到')
+            }
+          }},5000)
+      
+        this.setData({
+          notifyMsg: this.data.notifyMsg.concat(str)
+        })
       })
-    })
+    
   },
   //数据写入加了0.5秒的延迟
   writeBle(e) {
