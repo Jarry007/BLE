@@ -329,10 +329,10 @@ Page({
       deviceId: this._deviceId,
       serviceId: this._serviceId,
       characteristicId: this._characteristicId,
-      success(res) {
+      success:res=> {
         console.log('监听数据如下', res.errMsg)
         this.setData({
-          dialog:false
+          properties: ''
         })
       }
     })
