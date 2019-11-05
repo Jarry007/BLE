@@ -1,15 +1,16 @@
 {
   "pages": [
+     "pages/bar/index",
     "pages/wifi/wifi",
     "pages/cover/cover",
-    "pages/blue/blue",
-    "pages/bar/index"
+    "pages/blue/blue"
+    
     
   ],
   "window": {
     "navigationBarBackgroundColor": "#39b54a",
-    "navigationBarTitleText": "共享陪护床",
-    "navigationStyle": "custom",
+    "navigationBarTitleText": "123",
+
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

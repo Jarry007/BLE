@@ -1,7 +1,35 @@
 /* pages/bar/index.wxss */
-ec-canvas {
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  top: 30%;
+
+ec-canvas{
+   width: 100vw;
+   height: 500rpx;
+   position: absolute;top: 80rpx;
+}
+
+.rotate{
+   font-size: 40rpx;
+   width: 40rpx;
+   height: 40rpx;
+   line-height: 40rpx;
+   /* display: inline-block; */
+   float: right;
+   margin-top: 20rpx;
+   
+}
+
+.rotate.active{
+
+   transform:scale(1.2)  rotate(360deg) ;
+   transition: all 0.5s ease-in;
+}
+
+
+.update-time{
+   width: 100%;
+   height: 80rpx;
+   color: rgb(56, 55, 55);
+   background: rgb(231, 231, 231);
+   line-height: 80rpx;font-size: 26rpx;
+   padding-left: 40rpx;
+   padding-right: 40rpx;
 }
