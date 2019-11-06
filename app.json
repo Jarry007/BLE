@@ -1,35 +1,39 @@
 {
-  "pages": [
-     "pages/bar/index",
-    "pages/wifi/wifi",
-    "pages/cover/cover",
-    "pages/blue/blue"
-    
-    
-  ],
-  "window": {
-    "navigationBarBackgroundColor": "#39b54a",
-    "navigationBarTitleText": "123",
-
-    "navigationBarTextStyle": "white"
-  },
-  "tabBar": {
-    "selectedColor": "#9c26b0",
-    "list": [{
-      "pagePath": "pages/wifi/wifi",
-      "text": "蓝牙调试"
-    },
-    {
-      "pagePath": "pages/cover/cover",
-      "text": "转化校验"
-    },
-    {
-      "pagePath": "pages/bar/index",
-      "text": "图表"
-    }]
-  },
-    "usingComponents": {
+   "pages": [
+      "pages/component/line/line",
+      "pages/bar/index",
+      "pages/component/bar/bar",
+      "pages/wifi/wifi",
+      "pages/cover/cover",
+      "pages/blue/blue",
+      "pages/component/radar/radar",
+      
+      "pages/component/pie/pie"
+   ],
+   "window": {
+      "navigationBarBackgroundColor": "#3B63D5",
+      "navigationBarTitleText": "123",
+      "navigationBarTextStyle": "white"
+   },
+   "tabBar": {
+      "selectedColor": "#9c26b0",
+      "list": [
+         {
+            "pagePath": "pages/wifi/wifi",
+            "text": "蓝牙调试"
+         },
+         {
+            "pagePath": "pages/cover/cover",
+            "text": "转化校验"
+         },
+         {
+            "pagePath": "pages/bar/index",
+            "text": "图表"
+         }
+      ]
+   },
+   "usingComponents": {
       "cu-custom": "/colorui/components/cu-custom"
-    },
-  "sitemapLocation": "sitemap.json"
+   },
+   "sitemapLocation": "sitemap.json"
 }

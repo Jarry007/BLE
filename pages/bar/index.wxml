@@ -1,4 +1,4 @@
-
+<scroll-view  scroll-y style="height:100vh">
 <view class="update-time">
 <!-- 更新时间: 2019年11月2日16:48:11 -->
 更新时间：{{nowTime}}
@@ -7,6 +7,14 @@
 
 
   <ec-canvas  id="mychart-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+  <view class="use-bar">
+    <ec-bar></ec-bar>
+  </view>
+<view class="use-radar">
+ <ec-radar></ec-radar>
+</view>
+
+</scroll-view>
 
 
 

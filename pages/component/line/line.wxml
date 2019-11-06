@@ -1,0 +1,13 @@
+<view>
+   <view wx:for='{{userList}}' wx:key class="list">
+        
+           <view class="label">
+           <view class="cur" style="background:{{color[index]}}">{{index+1}}</view>
+           {{item.name}} </view> <view class="line">
+            <view class="active" style="width:20%"></view>
+           </view>
+           <view class="value"> {{item.active}}/{{item.all}}</view>
+          
+        
+   </view>
+</view>

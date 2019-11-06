@@ -1,0 +1,2 @@
+<button  bindtap="refresh">2019-10 ▼</button>
+ <ec-canvas class='radar' id="charts-radar" canvas-id="charts-radar" ec="{{ ec }}" ></ec-canvas>

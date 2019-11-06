@@ -2,7 +2,7 @@
 
 ec-canvas{
    width: 100vw;
-   height: 500rpx;
+   height: 400rpx;
    position: absolute;top: 80rpx;
 }
 
@@ -33,3 +33,13 @@ ec-canvas{
    padding-left: 40rpx;
    padding-right: 40rpx;
 }
+
+.use-bar{
+   position: absolute;
+   top: 500rpx;
+   }
+
+   .use-radar{
+      position: absolute;
+      top: 1000rpx;
+   }

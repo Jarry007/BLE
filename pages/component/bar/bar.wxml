@@ -1,0 +1,3 @@
+<button class="bar-btn" bindtap="refresh">2019-10 ▼</button>
+ <ec-canvas class='bar' id="charts-bar" canvas-id="charts-bar" ec="{{ ec }}" ></ec-canvas>
+

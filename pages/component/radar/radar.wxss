@@ -1,0 +1,16 @@
+.radar{
+   width: 90vw ;
+   height: 400rpx; position: absolute;top: 80rpx;
+
+}
+
+.bar-btn{
+   width: 100rpx;
+   height: 80rpx;
+   float: right;
+   margin-right: 40rpx;
+   color: #ccc;
+   border:1rpx solid #ddd;
+   border-radius: 80rpx;
+
+}

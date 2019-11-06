@@ -13,7 +13,7 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.1",
+	"libVersion": "2.9.2",
 	"appid": "wx45fd100b9543d470",
 	"projectname": "shebei",
 	"debugOptions": {

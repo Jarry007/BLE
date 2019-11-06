@@ -7,8 +7,6 @@ const randomData = function(){
    for(let i=0;i<12;i++){
       arry.push(Math.floor(Math.random() * 100))
    }
-
-
    return arry
    
 }
@@ -16,14 +14,6 @@ const randomData = function(){
 var chart = null;
 
 Page({
-   onShareAppMessage: function(res) {
-      return {
-         title: 'ECharts 可以在微信小程序中使用啦！',
-         path: '/pages/index/index',
-         success: function() {},
-         fail: function() {}
-      }
-   },
    data: {
       ec: {
          lazyLoad: true
@@ -35,6 +25,7 @@ Page({
    },
    onLoad: function() {
       this.lineCharts = this.selectComponent('#mychart-line');
+      console.log(this.lineCharts.init)
       this.judge()
 
    },
@@ -47,6 +38,8 @@ Page({
    },
    initLine() {
       this.lineCharts.init((canvas, width, height) => {
+         console.log('www',canvas)
+         
          chart = echarts.init(canvas, null, {
             width: width,
             height: height
@@ -61,8 +54,6 @@ Page({
    },
    getData() {
       let option = {
-
-
          grid: {
             containLabel: true
          },
@@ -183,7 +174,7 @@ ${item.data}度`
          y: randomData()
 
       })
-      console.log(chart)
+      // console.log(chart)
       this.judge()
    }
 });
