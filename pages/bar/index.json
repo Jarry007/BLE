@@ -2,7 +2,9 @@
   "usingComponents": {
     "ec-canvas":"../../ec-canvas/ec-canvas",
     "ec-bar":"../component/bar/bar",
-    "ec-radar":"../component/radar/radar"
+    "ec-radar":"../component/radar/radar",
+    "ec-line": "../component/line/line",
+    "ec-pie": "../component/pie/pie"
   },
 "disableScroll": true
 }

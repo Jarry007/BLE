@@ -10,10 +10,12 @@
    margin-left: 40rpx;
    flex: 3;
    /* background: blue; */
-   font-size: 26rpx;
+   font-size: 24rpx;
    overflow: scroll;
    /* text-overflow:ellipsis; */
    white-space: nowrap; 
+   font-weight: 500
+
    
 
 }
@@ -30,25 +32,27 @@
 .value{
    flex: 2;
    /* background:greenyellow */
+   color: #aaa;
 }
 
 .active{
    height: inherit;
-   background: rgb(59, 74, 213);
+   background: #2d6ef4;
    border-top-right-radius:20rpx;
    border-bottom-right-radius: 20rpx;
+   transition: all .3s ease-in
 }
 
 .label .cur{
-   width: 40rpx;
-   height: 40rpx;
+   width: 30rpx;
+   height: 30rpx;
    margin: auto 0;
-   line-height: 40rpx;
+   line-height: 30rpx;
    color: #fff;
-   font-size: 30rpx;
+   font-size: 22rpx;
    font-weight: 500;
    text-align: center;
-   background: grey;
+   background: #c1bcbc;
    /* border: 1rpx solid #ddd; */
    display: inline-block;
    border-top-left-radius: 50%;

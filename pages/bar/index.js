@@ -19,15 +19,28 @@ Page({
          lazyLoad: true
       },
       x: ['10-1', '10-2', '10-3', '10-4', '10-5', '10-6', '10-7', '10-8', '10-9', '10-10', '10-11', '10-12',],
-      temperature: [17.3, 20.4, 16.9, 15.0, 14.3, 13.2, 17.3, 20.4, 16.9, ],
-      y:[25,24,43,45,43,14,53,21,35,25,62]
-
+      y:[25,24,43,45,43,14,53,21,35,25,62,51],
+      dayList:[
+         { name: '嘉园工业园一期' }, { name: '嘉园工业园二期' }, { name: '嘉园工业园三期'}
+      ],
+      current:0
    },
    onLoad: function() {
       this.lineCharts = this.selectComponent('#mychart-line');
-      console.log(this.lineCharts.init)
+      
       this.judge()
+      this.setData({
+         sum:this.data.y.reduce((x,y)=>{
+            return x+y
+         })
+      })
 
+   },
+   changeSwiper(e){
+      this.setData({
+         current:e.detail.current
+      })
+      this.refresh()
    },
    judge() {
       if (!chart) {
@@ -65,8 +78,8 @@ Page({
             formatter(params) {
                const item = params[0]
 
-               return `${item.name}
-${item.data}度`
+               return `日期: ${item.name}
+用电： ${item.data} 度`
             },
             position: function (pos, params, dom, rect, size) {
                // 鼠标在左侧时 tooltip 显示到右侧，鼠标在右侧时 tooltip 显示到左侧。
@@ -170,8 +183,12 @@ ${item.data}度`
 
    },
    getlineData() {
+      const randomData_ = randomData()
       this.setData({
-         y: randomData()
+         y: randomData_,
+         sum: randomData_.reduce((x,y)=>{
+            return x+y
+         })
 
       })
       // console.log(chart)

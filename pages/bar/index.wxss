@@ -1,9 +1,45 @@
 /* pages/bar/index.wxss */
-
+page{
+   background: #fff;
+}
 ec-canvas{
    width: 100vw;
    height: 400rpx;
-   position: absolute;top: 80rpx;
+   position: absolute;top: 180rpx;
+}
+
+.swiper{
+  
+   position: absolute;
+   height: 240rpx;
+   top: 520rpx;
+   width: 100vw;
+  
+}
+
+.swiper swiper-item{
+
+   width: 50% !important;
+   
+   height: 180rpx !important;
+  
+   font-size: 30rpx;
+   padding-left: 20rpx !important;
+}
+
+.swiper-item{
+   margin-left: 40rpx;
+   border:2rpx solid #ddd;
+   width: calc(100% -40rpx);
+   height: inherit;
+   border-radius: 30rpx;
+   padding-left: 20rpx ;
+
+   line-height: 80rpx;
+}
+.swiper-item.active{
+   background: #3B63D5;
+   color: #fff;
 }
 
 .rotate{
@@ -26,9 +62,9 @@ ec-canvas{
 
 .update-time{
    width: 100%;
-   height: 80rpx;
+   height: 60rpx;
    color: rgb(56, 55, 55);
-   background: rgb(231, 231, 231);
+   background: rgb(240, 240, 240);
    line-height: 80rpx;font-size: 26rpx;
    padding-left: 40rpx;
    padding-right: 40rpx;
@@ -36,10 +72,50 @@ ec-canvas{
 
 .use-bar{
    position: absolute;
-   top: 500rpx;
+   top: 780rpx;
+    width: 100%;
+    
    }
 
-   .use-radar{
+   /* .use-radar{
       position: absolute;
-      top: 1000rpx;
-   }
+      top: 1380rpx;
+       width: 100%;
+   } */
+
+.use-line{
+   position: absolute;
+   top: 1700rpx;
+   width: 100%;
+   
+}
+
+.use-pie{
+   position: absolute;
+   top: 1200rpx;
+    width: 100%;
+    
+}
+
+
+swiper .wx-swiper-dot.wx-swiper-dot-active {
+	opacity: 1;
+	width: 28rpx !important;
+   height: 8rpx;
+   background: #3B63D5;
+   border-radius: 2rpx !important;
+}
+
+swiper .wx-swiper-dot {
+	position: relative;
+	margin: 100rpx 0rpx 0rpx 10rpx !important;
+ 
+   display: inline-block;
+	width: 8rpx !important;
+	height: 8rpx !important;
+	background: rgba(7, 7, 7, 0.5);
+	/* vertical-align: middle; */
+   border-radius: 50%;
+	opacity: 0.4;
+ 
+}

@@ -1,2 +1,5 @@
-<!--pages/component/pie/pie.wxml-->
-<text>pages/component/pie/pie.wxml</text>
+
+<view class="ec-title">
+支付方式占比 <text class="sum">总收入{{sum}}</text>  <view class="bar-btn" bindtap="refresh">2019-10 ▼</view>
+</view>
+ <ec-canvas class='radar' id="charts-pie" canvas-id="charts-pie" ec="{{ ec }}" ></ec-canvas>

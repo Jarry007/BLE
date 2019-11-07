@@ -1,2 +1,5 @@
-<button  bindtap="refresh">2019-10 ▼</button>
+
+<view class="ec-title">
+设备在线数量
+</view>
  <ec-canvas class='radar' id="charts-radar" canvas-id="charts-radar" ec="{{ ec }}" ></ec-canvas>

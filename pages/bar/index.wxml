@@ -5,13 +5,41 @@
 <view class="cuIcon-refresh rotate {{active?'active':''}}" bindtap="refresh"></view> 
 </view>
 
+<view class="ec-title">
+每日用电量(度) <view class="bar-btn" bindtap="refresh">2019-10-04 ▼</view>
+</view>
+
 
   <ec-canvas  id="mychart-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+
+  <swiper class="swiper" indicator-dots circular  bindchange="changeSwiper" >
+        <block wx:for="{{dayList}}" wx:key="*this">
+          <swiper-item>
+            <view class="swiper-item {{index==current?'active':''}}">
+               {{item.name}}
+
+               <view> <text style="font-weight:550;font-size:36rpx;"> {{sum}}</text>度</view>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+
+
   <view class="use-bar">
     <ec-bar></ec-bar>
   </view>
-<view class="use-radar">
+
+<view class="use-pie">
+ <ec-pie></ec-pie>
+</view>
+
+<!-- <view class="use-radar">
  <ec-radar></ec-radar>
+</view> -->
+
+
+<view class="use-line">
+ <ec-line></ec-line>
 </view>
 
 </scroll-view>

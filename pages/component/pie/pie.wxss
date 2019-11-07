@@ -1,1 +1,7 @@
 /* pages/component/pie/pie.wxss */
+
+.radar{
+   width: 90vw ;
+   height: 400rpx; position: absolute;top: 80rpx;
+ 
+}

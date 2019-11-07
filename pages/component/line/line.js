@@ -9,7 +9,7 @@ Component({
    },
 
    data: {
-      color:['red','orange','yellow'],
+      color: ['#f25c5c', '#f2865c','#f2bd5c'],
       userList:[{
          name:'嘉园工业园一期',
          all:453,
@@ -28,7 +28,40 @@ Component({
             active: 294}]
    },
    attached() {
-     
+     const list = Array.from(this.data.userList ,({active})=>active)
+
+      const ary = this.data.userList
+     this.setData({
+        sum:list.reduce((x,y)=>{
+           return x+y
+        }),
+        userList: ary.sort((x, y) => {
+           let a = x.active,
+              b = y.active
+           return b - a
+        })
+     })
    },
+   methods:{
+      refresh() {
+
+         const ary = this.data.userList
+         const active_ = new Array
+         ary.forEach(item=>{
+            item.active =Math.floor(item.all * Math.random())
+            active_.push(item.active)
+         })
+         this.setData({
+            userList: ary.sort((x, y) => {
+               let a = x.active,
+                  b = y.active
+               return b - a
+            }),
+            sum: active_.reduce((x,y)=>{
+               return x+y
+            })
+         })
+      }
+   }
   
 })

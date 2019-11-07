@@ -1,19 +1,20 @@
 {
    "pages": [
-      "pages/component/line/line",
+      
       "pages/bar/index",
       "pages/component/bar/bar",
       "pages/wifi/wifi",
       "pages/cover/cover",
       "pages/blue/blue",
       "pages/component/radar/radar",
+      "pages/component/pie/pie",
+      "pages/component/line/line"
       
-      "pages/component/pie/pie"
    ],
    "window": {
-      "navigationBarBackgroundColor": "#3B63D5",
-      "navigationBarTitleText": "123",
-      "navigationBarTextStyle": "white"
+      "navigationBarBackgroundColor": "#fff",
+      "navigationBarTitleText": "统计分析",
+      "navigationBarTextStyle": "black"
    },
    "tabBar": {
       "selectedColor": "#9c26b0",

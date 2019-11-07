@@ -1,3 +1,6 @@
-<button class="bar-btn" bindtap="refresh">2019-10 ▼</button>
+
+<view class="ec-title">
+电站收入(元) <text class="sum">总收入{{sum}}</text> <view class="bar-btn" bindtap="refresh">2019-10 ▼</view>
+</view>
  <ec-canvas class='bar' id="charts-bar" canvas-id="charts-bar" ec="{{ ec }}" ></ec-canvas>
 

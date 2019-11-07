@@ -12,5 +12,5 @@
    color: #ccc;
    border:1rpx solid #ddd;
    border-radius: 80rpx;
-
+   
 }

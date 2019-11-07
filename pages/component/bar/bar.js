@@ -20,15 +20,26 @@ Component({
 
    data: {
       ec: {
-         lazyLoad: true
+         lazyLoad: true,
+         disableTouch: true,
       },
       barData: [120, 200, 150, 80, 70]
    },
    attached(){
       this.lineCharts = this.selectComponent('#charts-bar');
-      console.log(this.lineCharts.init)
+      // console.log(this.lineCharts.init)
      
       this.judge()
+
+      // let sums = this.data.barData.reduce((x,y)=>{
+      //    return x+y
+      // })
+      
+      this.setData({
+         sum:this.data.barData.reduce((x,y)=>{
+            return x+y
+         })
+      })
    },
    methods:{
       judge() {
@@ -109,8 +120,12 @@ Component({
       },
 
       refresh(){
+         let randomData_ = randomData()
          this.setData({
-            barData: randomData()
+            barData: randomData_,
+            sum: randomData_.reduce((x, y) => {
+               return x + y
+            })
          })
          this.judge()
       }
