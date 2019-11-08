@@ -20,8 +20,7 @@ Component({
 
    data: {
       ec: {
-         lazyLoad: true,
-         disableTouch: true,
+         lazyLoad: true
       },
       pieData: [
          { value: 335, name: '支付宝' },
@@ -107,7 +106,7 @@ Component({
                      show:false,
                      position: 'inside',
                      formatter:'{b}:({d}%)',
-                     fontSize: 10,
+                     fontSize: 10,///
                      textShadowColor:'none',
                      textBorderWidth:'1',
                  

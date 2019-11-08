@@ -16,7 +16,7 @@ Component({
   },
 
   data: {
-
+   //   canMove:true
   },
 
   ready: function () {
@@ -80,11 +80,18 @@ Component({
         wx.canvasToTempFilePath(opt, this);
       });
     },
-
+   //   show(e){
+   //      console.log('shiow',e)
+   //      this.setData({
+   //         canMove:false
+   //      })
+   //   },
     touchStart(e) {
       if (this.chart && e.touches.length > 0) {
         var touch = e.touches[0];
+      
         var handler = this.chart.getZr().handler;
+     
         handler.dispatch('mousedown', {
           zrX: touch.x,
           zrY: touch.y
@@ -94,6 +101,7 @@ Component({
           zrY: touch.y
         });
         handler.processGesture(wrapTouch(e), 'start');
+       
       }
     },
 
@@ -122,6 +130,9 @@ Component({
           zrY: touch.y
         });
         handler.processGesture(wrapTouch(e), 'end');
+         // this.setData({
+         //    canMove: true
+         // })
       }
     }
   }
@@ -133,5 +144,6 @@ function wrapTouch(event) {
     touch.offsetX = touch.x;
     touch.offsetY = touch.y;
   }
+ 
   return event;
 }

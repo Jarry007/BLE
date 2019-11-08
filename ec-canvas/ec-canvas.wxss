@@ -1,4 +1,10 @@
 .ec-canvas {
   width: 100%;
-  height: 100%;
+  height: 95%;
+ 
+}
+.cover-view{
+   width: inherit;
+   height: inherit;
+   border:2rpx solid red
 }

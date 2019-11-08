@@ -1,7 +1,7 @@
 /* pages/component/bar/bar.wxss */
 
 .bar{
-   width: 90vw;
+   width:100vw;
    height: 400rpx; position: absolute;top: 80rpx;
   
 }
