@@ -19,6 +19,31 @@ swiper{
 
 }
 
+
+.wx-switch-input {
+   width: 87rpx !important;
+   height: 47rpx !important;
+   background: #ffd3b2 !important;
+   border: none !important;
+}
+
+/*白色样式（false的样式）*/
+
+.wx-switch-input::before {
+   background: rgb(158, 165, 184) !important;
+   border: none !important;
+   width: 87rpx !important;
+   height: 47rpx !important;
+}
+
+.wx-switch-input::after {
+   width: 46rpx !important;
+   height: 46rpx !important;
+   background: #293247 !important;
+    border:  transparent !important;
+}
+
+
 .bar-btn{
   padding-left: 14px;
    padding-right: 14px;

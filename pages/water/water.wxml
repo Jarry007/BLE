@@ -1,0 +1,22 @@
+<view class="logo">
+<text class="cuIcon-text"></text> <text class="logo-title">水质检测</text> 
+<view style="font-size:32rpx;">
+Water Quality Detection
+</view>
+</view>
+
+
+<view class="phone" bindtap="resetNum">
+<input class="input" placeholder="请输入设备号" bindinput='deviceNum'></input>
+</view>
+
+<view class="login">
+
+<!-- <view class="login-btn" bindtap="toHome">
+一键登录
+</view> -->
+
+<button class="login-btn" open-type="getUserInfo"
+  bindgetuserinfo="bindGetUserInfo"> 进入 </button>
+
+</view>

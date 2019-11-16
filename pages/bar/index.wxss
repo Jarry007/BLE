@@ -68,6 +68,7 @@ ec-canvas{
    line-height: 80rpx;font-size: 26rpx;
    padding-left: 40rpx;
    padding-right: 40rpx;
+   display: inline-block
 }
 
 .use-bar{

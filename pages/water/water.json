@@ -1,0 +1,8 @@
+{
+  "usingComponents": {},
+      "navigationBarBackgroundColor": "#111",
+      "navigationBarTitleText": "水质检测",
+      "navigationStyle": "custom",
+      "navigationBarTextStyle": "white"
+  
+}

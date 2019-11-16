@@ -1,0 +1,158 @@
+/* pages/water/home.wxss */
+/* ec-canvas{
+   width: 100vw;
+   height: 600rpx;
+   position: absolute;top: 280rpx;
+} */
+
+.mode-card .active{
+   color: #ffd3b2;
+}
+
+.mode-card.active .icon{
+   width: 44rpx;
+   height: 44rpx;
+   border-radius: 50%;
+   background: #ffd3b2;
+   /* margin-left: 30rpx; */
+   border: none
+}  
+
+.mode-card .icon{
+   width: 40rpx;
+   height: 40rpx;
+   border-radius: 50%;
+   /* background: tra; */
+   border:4rpx solid #ddd;
+   position: absolute;
+   left: 30rpx;
+   top:50%;
+   transform: translateY(-50%);
+}  
+
+.mode-card .name{
+   font-size: 34rpx;
+   color: rgba(255, 255, 255, 0.5);
+   /* margin-left: 100rpx; */
+   margin: auto 100rpx;
+} 
+
+
+.mode-card.active .name{
+  font-size: 34rpx;
+   color: #ffd3b2;
+   margin: auto 100rpx;
+}  
+.mode-list{
+   margin: 4vh 0;
+}
+.mode-card.active .states{
+  
+   font-size: 28rpx;
+   position: absolute;
+   right: 100rpx;
+   top: 50%;
+   transform: translateY(-50%);
+   color: #ffd3b2;
+}
+
+.mode-card{
+   height: 12vh;
+   width: 90%;
+   margin-left: 5%;
+   box-shadow: 2px 6px 16px  rgba(17, 17, 17, 0.7);
+   border-radius: 20rpx;
+   margin-top: 40rpx;
+   background-image: linear-gradient(160deg, #3d4660 0%, #232a3b 150%);
+   color: rgba(255, 255, 255, 0.5);
+  
+   display: flex;
+   position: relative;
+   z-index: 1;
+   
+}
+
+.mode-card .states{
+ 
+   position: absolute;
+   right: 100rpx;
+   font-size: 28rpx;
+   color: rgba(255, 255, 255, 0.5);
+   top: 50%;
+   transform: translateY(-50%);
+
+}
+page{
+   background-color: #3D4660;
+   background-image: linear-gradient(160deg,#3D4660 0%,#1D2332 100%);
+}
+
+.update-times{
+   width: 100%;
+   height: 60rpx;
+   color:#ffd3b2;
+   /* background: rgb(240, 240, 240); */
+   line-height: 80rpx;font-size: 26rpx;
+   padding-left: 40rpx;
+   padding-right: 40rpx;
+   margin-top: 100rpx;
+   display: flex
+}
+.refresh{
+   animation: rotato 0.3s ease-in;
+}
+
+.info-item{
+   width: 49%;
+   height: 80rpx;
+   margin-top: 30rpx;
+ 
+}
+
+.mode-card .states::before{
+   content: '未'
+
+}
+
+.mode-card.active .states::before{
+   content: '已';
+   
+}
+.tips{
+   width: 100%;
+   color: rgba(255, 255, 255, 0.5);
+   font-size: 80%;
+   text-align: left;
+   border-top: 2rpx dashed #ddd;
+   padding: 16rpx;
+
+}
+
+.data-info{
+   width: 80%;
+   display: flex;
+   flex-wrap: wrap;
+   background: #3d4660;
+   text-align: center;
+   color: #ffd3b2;
+   margin-left: 10%;
+   margin-bottom: 20rpx;
+   animation: down 0.5s ease-in-out;
+   z-index: -1;
+   
+}
+
+@keyframes down{
+   0%{ transform: translateY(-20%)}
+
+   75%{transform: translateY(20%)}
+
+   100%{transform: translateY(0%)}
+}
+
+@keyframes rotato{
+   from{
+      transform: rotate(0)
+   }
+   to{transform: rotate(180deg)}
+}

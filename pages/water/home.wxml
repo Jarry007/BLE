@@ -1,0 +1,43 @@
+
+
+<view class="update-times">
+   <!-- 更新时间: 2019年11月2日16:48:11 -->
+   更新时间：{{nowTime}}
+   <view class="cuIcon-refresh" hover-class="refresh" bindtap="refresh"></view>
+</view>
+
+
+
+
+<!-- <view class="ec-title">
+每日用电量(度) <view class="bar-btn" bindtap="refresh">2019-10-04 ▼</view>
+</view> -->
+<!-- <ec-canvas  id="mychart-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas> -->
+
+
+<view class="mode-list">
+   <view class="for" wx:for='{{deviceList}}' wx:key='index'>
+      <view class="mode-card {{index==chose?'active':''}}" data-index="{{index}}" bindtap="choseIndex">
+         <view class="icon"></view>
+         <view class="name">设备ID: {{item.deviceId}}
+            <view style="font-size:20rpx">创建时间: {{ item.createTime}}</view>
+         </view>
+         <view class="states">展开</view>
+
+      </view>
+
+
+      <view class="data-info" wx:if='{{index==chose}}'>
+         <view class="info-item"> 设备编号:{{deviceInfo.devicveid}} </view>
+           <view class="info-item">TDS: {{deviceInfo.tds}}</view>
+             <view class="info-item"> 按键状态:{{deviceInfo.buttonstates}}</view>
+               <view class="info-item"> 温度:{{deviceInfo.temperature}}</view>
+                 <view class="info-item"> 电磁阀状态: <switch></switch> {{deviceInfo.valvestates}}</view>
+                  <view class="info-item"> 电磁阀阈值:{{deviceInfo.valvevalue}}</view>
+
+                  <view class="tips"> 小贴士: 世界卫生组织(WHO)一般认为TDS值低于600的水口感好或是适当的，当TDS水平大于1000时，饮用水的口感有明显变化</view>
+      </view>
+
+   </view>
+
+</view>

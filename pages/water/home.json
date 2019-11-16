@@ -1,0 +1,9 @@
+{
+"usingComponents": {
+   "ec-canvas": "../../ec-canvas/ec-canvas"
+},
+"navigationBarBackgroundColor": "#111",
+"navigationBarTitleText": "水质检测",
+"navigationStyle": "custom",
+"navigationBarTextStyle": "white"
+}

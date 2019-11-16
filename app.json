@@ -1,6 +1,9 @@
 {
    "pages": [
+      "pages/water/water",
+      "pages/water/home",
       
+  
       "pages/bar/index",
       "pages/component/bar/bar",
       "pages/wifi/wifi",
@@ -9,6 +12,7 @@
       "pages/component/radar/radar",
       "pages/component/pie/pie",
       "pages/component/line/line"
+    
       
    ],
    "window": {
@@ -17,11 +21,17 @@
       "navigationBarTextStyle": "black"
    },
    "tabBar": {
-      "selectedColor": "#9c26b0",
+      "backgroundColor": "#1D2332",
+      "color": "#ccc",
+      "selectedColor": "#ffd3b2",
       "list": [
          {
             "pagePath": "pages/wifi/wifi",
             "text": "蓝牙调试"
+         },
+         {
+            "pagePath": "pages/water/water",
+            "text": "水质"
          },
          {
             "pagePath": "pages/cover/cover",
